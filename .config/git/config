@@ -5,3 +5,5 @@
 	email = liu.sto@northeastern.edu
 [core]
 	editor = nvim
+[rerere]
+	enabled = 1
