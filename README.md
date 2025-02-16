@@ -13,4 +13,5 @@ Add sym links to the necessary configs
 ```bash
 ln -s ~/dotfiles/.config/nvim ~/.config/nvim
 ln -s ~/dotfiles/.config/nix ~/.config/nvim
+ln -s ~/dotfiles/.config/git/config ~/.config/git/config/.gitconfig
 ```
