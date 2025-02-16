@@ -3,3 +3,5 @@
 # Please adapt and uncomment the following lines:
 	name = Stone Liu
 	email = liu.sto@northeastern.edu
+[core]
+	editor = vim
