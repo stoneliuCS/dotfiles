@@ -5,30 +5,28 @@
 Clone the repository
 
 ```bash
-https://github.com/stoneliuCS/dotfiles.git ~/dotfiles
+git clone https://github.com/stoneliuCS/dotfiles.git ~/dotfiles
 ```
-install brew
-```bash 
+
+## Dependencies:
+```bash
+# Brew Installation
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-install nix 
-```bash 
+# Nix Installation
 sh <(curl -L https://nixos.org/nix/install)
-```
-
-install mactex
-```bash 
+# Install MacTex (For Latex Editing)
 brew install --cask mactex
-```
-
-install GNU Stow
-```bash 
+# Install Neovim 
+brew install neovim
+# Install tmux 
+brew install tmux
+# Install GNU Stow
 brew install stow
 ```
 
 Add symlinks to local machine:
 ```bash 
+# In dotfiles root directory
 stow nvim 
 stow git 
 stow nix
