@@ -4,6 +4,6 @@
 	name = Stone Liu
 	email = liu.sto@northeastern.edu
 [core]
-	editor = nvim
+	editor = vim
 [rerere]
 	enabled = 1
