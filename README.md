@@ -30,4 +30,5 @@ Add symlinks to local machine:
 stow nvim 
 stow git 
 stow nix
+stow tmux
 ```
