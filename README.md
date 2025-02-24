@@ -22,6 +22,8 @@ brew install neovim
 brew install tmux
 # Install GNU Stow
 brew install stow
+# Install Tmux Plugin Manager in the root directory
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
 Add symlinks to local machine:
@@ -31,4 +33,9 @@ stow nvim
 stow git 
 stow nix
 stow tmux
+```
+
+Source the tmux file
+```bash 
+tmux source ~/.tmux.conf
 ```
