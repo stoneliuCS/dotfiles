@@ -33,6 +33,7 @@ stow nvim
 stow git 
 stow nix
 stow tmux
+stow zshrc 
 ```
 
 Source the tmux file
