@@ -31,10 +31,6 @@ vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 
--- Enables text wrapping after 80 characters.
-vim.opt.textwidth = 80
-vim.opt.wrap = true
-vim.opt.linebreak = true
-vim.opt.breakindent = true
+vim.opt.colorcolumn = "80"
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
