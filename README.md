@@ -20,6 +20,8 @@ brew install --cask mactex
 brew install neovim
 # Install tmux 
 brew install tmux
+# Install fzf
+brew install fzf
 # Install GNU Stow
 brew install stow
 # Install Tmux Plugin Manager in the root directory
