@@ -60,8 +60,5 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
-  },
-  rocks = {
-    enabled = false,
-  },
+  }
 })

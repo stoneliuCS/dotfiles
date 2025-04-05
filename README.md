@@ -24,6 +24,8 @@ brew install tmux
 brew install fzf
 # Install GNU Stow
 brew install stow
+# Install luarocks
+brew install luarocks
 # Install Tmux Plugin Manager in the root directory
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
