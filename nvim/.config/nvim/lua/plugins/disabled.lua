@@ -11,10 +11,27 @@ return {
     "nvimdev/dashboard-nvim",
     enabled = false,
   },
+
   {
     "nvim-lualine/lualine.nvim",
-    enabled = false,
+    config = function()
+      require("lualine").setup({
+        options = {
+          component_separators = "",
+          section_separators = "",
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = {  },
+          lualine_c = { "filename" },
+          lualine_x = {  },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
+        },
+      })
+    end,
   },
+
   {
     "rafamadriz/friendly-snippets",
     enabled = false,
