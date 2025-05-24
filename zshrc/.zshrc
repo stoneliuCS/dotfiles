@@ -4,3 +4,4 @@ alias vi="nvim"
 alias oldvim="/usr/bin/vim"
 # Allow vim bindings to zsh shell
 bindkey -v
+export PATH="$HOME/.bun/bin:$PATH"
