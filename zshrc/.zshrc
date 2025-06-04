@@ -7,3 +7,6 @@ bindkey -v
 export PATH="$HOME/.bun/bin:$PATH"
 # Limit fzf to only one file deep for performance
 alias f='nvim $(fzf)'
+
+# bun completions
+[ -s "/Users/stoneliu/.bun/_bun" ] && source "/Users/stoneliu/.bun/_bun"
