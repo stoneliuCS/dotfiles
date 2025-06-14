@@ -1,3 +1,4 @@
+-- Markdown plugins go here.
 return {
   {
     "iamcco/markdown-preview.nvim",
