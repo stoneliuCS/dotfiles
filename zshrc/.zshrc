@@ -11,3 +11,8 @@ alias f='nvim $(fzf)'
 
 # bun completions
 [ -s "/Users/stoneliu/.bun/_bun" ] && source "/Users/stoneliu/.bun/_bun"
+
+fcd() {
+    local dir
+    dir=$(find . -type d 2>/dev/null | fzf --preview="ls -la {}") && cd "$dir"
+}
