@@ -12,7 +12,12 @@ alias f='nvim $(fzf)'
 # bun completions
 [ -s "/Users/stoneliu/.bun/_bun" ] && source "/Users/stoneliu/.bun/_bun"
 
+# Add fcd for faster finding of directories
 fcd() {
     local dir
     dir=$(find . -type d 2>/dev/null | fzf --preview="ls -la {}") && cd "$dir"
 }
+
+# Add Go to ZSHRC
+export GOBIN=$(go env GOPATH)/bin
+export PATH=$GOBIN:$PATH
