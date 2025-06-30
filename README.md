@@ -26,9 +26,14 @@ brew install fzf
 brew install stow
 # Install luarocks
 brew install luarocks
+# Install pandoc
+brew install pandoc
+# Install Skim the better pdf viewer
+brew install --cask skim
 # Install Tmux Plugin Manager in the root directory
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
+I really think I should just make an install script
 
 Add symlinks to local machine:
 ```bash 

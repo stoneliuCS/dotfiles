@@ -23,7 +23,7 @@ return {
       -- Enable continuous compilation
       vim.g.vimtex_compiler_latexmk = {
         continuous = 1,
-        build_dir = "",
+        build_dir = "build",
         callback = 1,
         executable = "latexmk",
         options = {
