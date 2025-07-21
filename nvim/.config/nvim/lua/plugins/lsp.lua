@@ -1,5 +1,4 @@
 return {
-  { "nvim-java/nvim-java" },
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -20,9 +19,5 @@ return {
         },
       },
     },
-  },
-  {
-    "mfussenegger/nvim-dap",
-    config = function() end,
   },
 }

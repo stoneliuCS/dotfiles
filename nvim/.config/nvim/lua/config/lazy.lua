@@ -31,7 +31,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.rust" },
     { import = "lazyvim.plugins.extras.lang.go" },
 
-    { import = "lazyvim.plugins.extras.lang.java" },
     -- Misc.
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "plugins" },
