@@ -3,7 +3,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      ensure_installed = { "markdown" },
       highlight = {
         enable = true,
         disable = { "latex" },
@@ -27,7 +26,6 @@ return {
         callback = 1,
         executable = "latexmk",
         options = {
-          "-verbose",
           "-file-line-error",
           "-synctex=1",
           "-interaction=nonstopmode",
