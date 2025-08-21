@@ -1,4 +1,5 @@
 # Alias VI and VIM to NVIM
+alias v='NVIM_APPNAME="nvim2" nvim'
 alias vim="nvim"
 alias vi="nvim"
 alias oldvim="/usr/bin/vim"
