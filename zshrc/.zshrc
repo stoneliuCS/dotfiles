@@ -6,8 +6,8 @@ alias oldvim="/usr/bin/vim"
 # Allow vim bindings to zsh shell
 bindkey -v
 export PATH="$HOME/.bun/bin:$PATH"
-# Limit fzf to only one file deep for performance
-alias f='nvim $(fzf)'
+source <(fzf --zsh)
+alias f='nvim $(fzf --style default --preview "fzf-preview.sh {}" --bind "focus:transform-header:file --brief {}")'
 
 # bun completions
 [ -s "/Users/stoneliu/.bun/_bun" ] && source "/Users/stoneliu/.bun/_bun"
