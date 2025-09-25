@@ -45,4 +45,13 @@ return {
       end,
     },
   },
+  {
+    "saghen/blink.cmp",
+    opts = {
+      cmdline = {
+        keymap = { preset = "inherit" },
+        completion = { menu = { auto_show = false } },
+      },
+    },
+  },
 }
