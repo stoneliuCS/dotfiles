@@ -23,9 +23,6 @@ vim.g.maplocalleader = "\\"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.swapfile = false
 vim.opt.number = true
-vim.diagnostic.config({
-	virtual_text = true, -- Enable inline virtual text for diagnostics
-})
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -38,6 +35,14 @@ vim.opt.swapfile = false
 vim.opt.textwidth = 120
 vim.opt.pumheight = 10
 vim.opt.relativenumber = true
+-- Diagnostic Configuration
+vim.diagnostic.config({
+	update_in_insert = true,
+	virtual_text = true,
+	signs = true,
+	underline = true,
+	severity_sort = true,
+})
 
 -- Setup lazy.nvim
 require("lazy").setup({
