@@ -5,13 +5,13 @@ return {
 	-- or if using mini.icons/mini.nvim
 	-- dependencies = { "echasnovski/mini.icons" },
 	opts = {
-    keymap = {
-      fzf = {
-        ["tab"] = "down",
-        ["shift-tab"] = "up",
-      }
-    }
-  },
+		keymap = {
+			fzf = {
+				["tab"] = "down",
+				["shift-tab"] = "up",
+			},
+		},
+	},
 	keys = {
 		{
 			"<leader><leader>",
@@ -26,6 +26,13 @@ return {
 				require("fzf-lua").live_grep_native()
 			end,
 			desc = "Live grep (cwd)",
+		},
+		{
+			"<leader>b",
+			function()
+				require("fzf-lua").buffers()
+			end,
+			desc = "Find current buffers",
 		},
 	},
 }
