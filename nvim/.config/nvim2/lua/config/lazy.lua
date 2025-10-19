@@ -30,7 +30,6 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
--- For persistant undos
 vim.opt.undofile = true
 vim.opt.number = true
 vim.opt.colorcolumn = "120"
@@ -38,6 +37,7 @@ vim.opt.conceallevel = 0
 vim.opt.swapfile = false
 vim.opt.textwidth = 120
 vim.opt.pumheight = 10
+vim.opt.relativenumber = true
 
 -- Setup lazy.nvim
 require("lazy").setup({
