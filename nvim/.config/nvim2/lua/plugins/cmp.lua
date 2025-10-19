@@ -21,6 +21,9 @@ return {
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
+			performace = {
+				max_view_entries = 10,
+			},
 			sources = {
 				{ name = "vimtex" },
 				{ name = "latex_symbols" },

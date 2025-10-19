@@ -3,7 +3,7 @@ require("config.lazy")
 
 -- Load the theme
 vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme rose-pine-main]])
 
 -- Load the lsps
 vim.lsp.config("luals", require("config.lsp.luals"))
