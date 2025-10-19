@@ -4,7 +4,7 @@
 	name = Stone Liu
 	email = liu.sto@northeastern.edu
 [core]
-	editor = nvim
+	editor = NVIM_APPNAME="nvim2" nvim
   excludesFile = ~/.config/git/.gitignore_global
 [rerere]
 	enabled = 1
