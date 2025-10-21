@@ -44,6 +44,7 @@ vim.diagnostic.config({
 	severity_sort = true,
 })
 
+
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
