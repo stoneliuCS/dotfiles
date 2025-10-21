@@ -82,5 +82,16 @@ return {
 			desc = "Lsp references",
 			nowait = true,
 		},
+		{
+			"ca",
+			function()
+				require("fzf-lua").lsp_code_actions()
+			end,
+			desc = "fzf code actions",
+			nowait = true,
+		},
 	},
+	config = function()
+		require("fzf-lua").register_ui_select()
+	end,
 }
