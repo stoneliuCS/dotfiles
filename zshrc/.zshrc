@@ -22,3 +22,6 @@ fcd() {
 # Add Go to ZSHRC
 export GOBIN=$(go env GOPATH)/bin
 export PATH=$GOBIN:$PATH
+
+# Euporie Notebook ALIAS
+alias ep='MPLBACKEND=Agg euporie-notebook --log-level=debug --log-file=euporie.log --graphics iterm'
