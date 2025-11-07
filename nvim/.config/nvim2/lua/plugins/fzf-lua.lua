@@ -51,9 +51,17 @@ return {
 			nowait = true,
 		},
 		{
-			"<leader>g",
+			"<leader>fg",
 			function()
 				require("fzf-lua").live_grep_native()
+			end,
+			desc = "Live grep (cwd)",
+			nowait = true,
+		},
+		{
+			"<leader>g",
+			function()
+				require("fzf-lua").lgrep_curbuf()
 			end,
 			desc = "Live grep (cwd)",
 			nowait = true,
