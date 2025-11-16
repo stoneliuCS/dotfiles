@@ -13,6 +13,7 @@ vim.lsp.config("pyright", require("config.lsp.pyright"))
 vim.lsp.config("vtsls", require("config.lsp.vtsls"))
 vim.lsp.config("dockerls", require("config.lsp.dockerls"))
 vim.lsp.config("yamlls", require("config.lsp.yamlls"))
+vim.lsp.config("gopls", require("config.lsp.gopls"))
 
 -- Enable LSPs
 vim.lsp.enable({
@@ -22,4 +23,5 @@ vim.lsp.enable({
 	"vtsls",
 	"dockerls",
 	"yamlls",
+  "gopls"
 })
