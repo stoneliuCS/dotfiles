@@ -61,7 +61,7 @@ return {
 		{
 			"<leader>g",
 			function()
-				require("fzf-lua").lgrep_curbuf()
+				require("fzf-lua").grep_curbuf()
 			end,
 			desc = "Live grep (cwd)",
 			nowait = true,
