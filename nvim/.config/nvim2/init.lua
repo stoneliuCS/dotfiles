@@ -14,6 +14,7 @@ vim.lsp.config("vtsls", require("config.lsp.vtsls"))
 vim.lsp.config("dockerls", require("config.lsp.dockerls"))
 vim.lsp.config("yamlls", require("config.lsp.yamlls"))
 vim.lsp.config("gopls", require("config.lsp.gopls"))
+vim.lsp.config("rust-analyzer", require("config.lsp.rust-analyzer"))
 
 -- Enable LSPs
 vim.lsp.enable({
@@ -23,5 +24,6 @@ vim.lsp.enable({
 	"vtsls",
 	"dockerls",
 	"yamlls",
-  "gopls"
+	"gopls",
+	"rust-analyzer",
 })
