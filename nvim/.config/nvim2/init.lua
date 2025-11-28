@@ -15,6 +15,7 @@ vim.lsp.config("dockerls", require("config.lsp.dockerls"))
 vim.lsp.config("yamlls", require("config.lsp.yamlls"))
 vim.lsp.config("gopls", require("config.lsp.gopls"))
 vim.lsp.config("rust-analyzer", require("config.lsp.rust-analyzer"))
+vim.lsp.config("tinymist", require("config.lsp.tinymist"))
 
 -- Enable LSPs
 vim.lsp.enable({
@@ -26,4 +27,5 @@ vim.lsp.enable({
 	"yamlls",
 	"gopls",
 	"rust-analyzer",
+	"tinymist",
 })
