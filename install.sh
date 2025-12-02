@@ -17,6 +17,7 @@ brew install pandoc
 # Install Skim the better pdf viewer
 brew install --cask skim
 brew install go
+brew install imagemagick
 # Install Tmux Plugin Manager in the root directory
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
