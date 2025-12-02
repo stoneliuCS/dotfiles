@@ -1,0 +1,5 @@
+# ~/.config/ghostty/config
+font-size = 18
+font-family = "0xProto Nerd Font Mono"
+shell-integration-features = no-cursor
+cursor-style = block

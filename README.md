@@ -49,3 +49,6 @@ Source the tmux file
 ```bash 
 tmux source ~/.tmux.conf
 ```
+
+![NOTE] that sometimes the dracula ui won't load properly, when in the tmux session you can ctrl-a then shift I to
+install
