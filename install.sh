@@ -1,32 +1,22 @@
 #!/bin/bash
 
-# Install MacTex (For Latex Editing)
 brew install --cask mactex
-# Install Neovim 
 brew install neovim
-# Install tmux 
 brew install tmux
-# Install fzf
 brew install fzf
-# Install GNU Stow
 brew install stow
-# Install luarocks
 brew install luarocks
-# Install pandoc
 brew install pandoc
-# Install Skim the better pdf viewer
 brew install --cask skim
 brew install go
 brew install imagemagick
-# Install Tmux Plugin Manager in the root directory
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# Updates all existing packages
+# Updates all existing packages and ensures you have all managers installed.
 brew update
 brew upgrade
 brew cleanup
-
 npm update -g
+rustup update
 
 stow nvim 
 stow git 
@@ -34,4 +24,6 @@ stow nix
 stow tmux
 stow zshrc 
 
+# Install Tmux Plugin Manager in the root directory
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tmux source ~/.tmux.conf

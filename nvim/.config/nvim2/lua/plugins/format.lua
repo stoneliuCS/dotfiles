@@ -3,11 +3,11 @@ return {
 	"stevearc/conform.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	cmd = { "ConformInfo" },
-keys = {
+	keys = {
 		{
 			"<leader>cf",
 			function()
-        -- Set the timeout to be 5 seconds for large files
+				-- Set the timeout to be 5 seconds for large files
 				require("conform").format({ async = false, lsp_fallback = true, timeout_ms = 5000 })
 			end,
 			desc = "Format file",
@@ -16,7 +16,6 @@ keys = {
 	opts = {
 		notify_on_error = false,
 
-		-- Choose formatters per filetype (first available wins)
 		formatters_by_ft = {
 			lua = { "stylua" },
 
@@ -34,6 +33,7 @@ keys = {
 			scss = { "prettierd" },
 			markdown = { "prettierd" },
 			graphql = { "prettierd" },
+			typst = { "typstyle" },
 
 			sh = { "shfmt" },
 			python = { "ruff_format", "black" },
