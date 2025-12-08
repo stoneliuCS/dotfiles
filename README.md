@@ -8,47 +8,10 @@ Clone the repository
 git clone https://github.com/stoneliuCS/dotfiles.git ~/dotfiles
 ```
 
-## Dependencies:
-```bash
-# Brew Installation
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# Nix Installation
-sh <(curl -L https://nixos.org/nix/install)
-# Install MacTex (For Latex Editing)
-brew install --cask mactex
-# Install Neovim 
-brew install neovim
-# Install tmux 
-brew install tmux
-# Install fzf
-brew install fzf
-# Install GNU Stow
-brew install stow
-# Install luarocks
-brew install luarocks
-# Install pandoc
-brew install pandoc
-# Install Skim the better pdf viewer
-brew install --cask skim
-# Install Tmux Plugin Manager in the root directory
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
-I really think I should just make an install script
+# Required System Dependencies
+- Install Brew
+- Install Rust, including rustup and cargo
+- Install Npm
 
-Add symlinks to local machine:
-```bash 
-# In dotfiles root directory
-stow nvim 
-stow git 
-stow nix
-stow tmux
-stow zshrc 
-```
-
-Source the tmux file
-```bash 
-tmux source ~/.tmux.conf
-```
-
-![NOTE] that sometimes the dracula ui won't load properly, when in the tmux session you can ctrl-a then shift I to
-install
+![NOTE] That sometimes the dracula ui won't load properly, when in the tmux session you can ctrl-a then shift I to
+install all dependencies.
