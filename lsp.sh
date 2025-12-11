@@ -11,3 +11,4 @@ npm install -g yaml-language-server --force
 brew install gopls
 rustup component add rust-analyzer
 brew install tinymist
+cargo install typstyle --locked
