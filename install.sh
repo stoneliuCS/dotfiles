@@ -12,6 +12,7 @@ brew install go
 brew install imagemagick
 brew install go-task/tap/go-task
 brew install --cask font-jetbrains-mono-nerd-font
+brew install goimports
 
 # Updates all existing packages and ensures you have all managers installed.
 brew update
