@@ -4,11 +4,15 @@
 
 brew install lua-language-server
 brew install texlab
+brew install gopls
+brew install tinymist
+
 npm install -g basedpyright --force
 npm install -g pyright --force
 npm install -g @vtsls/language-server --force
 npm install -g yaml-language-server --force
-brew install gopls
+
 rustup component add rust-analyzer
-brew install tinymist
 cargo install typstyle --locked
+
+go install github.com/a-h/templ/cmd/templ@latest
