@@ -18,6 +18,7 @@ fcd() {
     local dir
     dir=$(find . -type d 2>/dev/null | fzf --preview="ls -la {}") && cd "$dir"
 }
+cheat() { clear && curl cheat.sh/"$1" ; }
 
 # Add Go to ZSHRC
 export GOBIN=$(go env GOPATH)/bin
@@ -33,3 +34,4 @@ export NVM_DIR="$HOME/.nvm"
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.4.1 # run chruby to see actual version
+
