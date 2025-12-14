@@ -16,8 +16,9 @@ alias f='nvim $(fzf --style default --preview "fzf-preview.sh {}" --bind "focus:
 # Add fcd for faster finding of directories
 fcd() {
     local dir
-    dir=$(find . -type d 2>/dev/null | fzf --preview="ls -la {}") && cd "$dir"
+    dir=$(fd -t d 2>/dev/null | fzf --preview="ls -la {}") && cd "$dir"
 }
+
 cheat() { clear && curl cheat.sh/"$1" ; }
 
 # Add Go to ZSHRC
