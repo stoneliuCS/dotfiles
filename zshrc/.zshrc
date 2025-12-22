@@ -8,7 +8,7 @@ alias oldvim="/usr/bin/vim"
 bindkey -v
 export PATH="$HOME/.bun/bin:$PATH"
 source <(fzf --zsh)
-alias f='nvim $(fzf --style default --preview "fzf-preview.sh {}" --bind "focus:transform-header:file --brief {}")'
+alias f='vim $(fzf --style default --preview "fzf-preview.sh {}" --bind "focus:transform-header:file --brief {}")'
 
 # bun completions
 [ -s "/Users/stoneliu/.bun/_bun" ] && source "/Users/stoneliu/.bun/_bun"
