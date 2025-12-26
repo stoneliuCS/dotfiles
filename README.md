@@ -13,7 +13,8 @@ git clone https://github.com/stoneliuCS/dotfiles.git ~/dotfiles
 - Install Rust, including rustup and cargo
 - Install Npm
 
->[!NOTE] That sometimes the dracula ui won't load properly, when in the tmux session you can _leader_ (default is set to
+> [!NOTE] 
+That sometimes the dracula ui won't load properly, when in the tmux session you can _leader_ (default is set to
 ctr-a then I to install all dependencies.
 
 ## Configuring QuteBrowser
