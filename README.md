@@ -17,7 +17,10 @@ git clone https://github.com/stoneliuCS/dotfiles.git ~/dotfiles
 That sometimes the dracula ui won't load properly, when in the tmux session you can _leader_ (default is set to
 ctr-a then I to install all dependencies.
 
-## Configuring QuteBrowser
-We want to build qute from source since it has codec support for mp4 videos. Following this useful link here:
-https://doc.qt.io/qt-6/macos-building.html
-https://download.qt.io/
+[Typescript-Go LSP](https://www.reddit.com/r/neovim/comments/1kk63nb/typescript_go_lsp/)
+```bash
+git clone --recursive --depth 1 https://github.com/microsoft/typescript-go.git
+cd typescript-go
+npm ci
+npm run build
+```
