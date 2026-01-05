@@ -37,3 +37,11 @@ export NVM_DIR="$HOME/.nvm"
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.4.1 # run chruby to see actual version
+
+# pnpm
+export PNPM_HOME="/Users/stone/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
