@@ -17,17 +17,18 @@ vim.lsp.config("gopls", require("config.lsp.gopls"))
 vim.lsp.config("rust-analyzer", require("config.lsp.rust-analyzer"))
 vim.lsp.config("tinymist", require("config.lsp.tinymist"))
 vim.lsp.config("templ", require("config.lsp.templ"))
+vim.lsp.config("ts_go_ls", require("config.lsp.ts_go_ls"))
 
 -- Enable LSPs
 vim.lsp.enable({
-	"luals",
-	"texlab",
-	"pyright",
-	"vtsls",
-	"dockerls",
-	"yamlls",
-	"gopls",
-	"rust-analyzer",
-	"tinymist",
-	"templ",
+  "luals",
+  "texlab",
+  "pyright",
+  "dockerls",
+  "yamlls",
+  "gopls",
+  "rust-analyzer",
+  "tinymist",
+  "templ",
+  "ts_go_ls",
 })
