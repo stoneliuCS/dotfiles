@@ -4,6 +4,10 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	-- or if using mini.icons/mini.nvim
 	-- dependencies = { "echasnovski/mini.icons" },
+	config = function(_, opts)
+		require("fzf-lua").setup(opts)
+		require("fzf-lua").register_ui_select()
+	end,
 	opts = {
 		keymap = {
 			fzf = {

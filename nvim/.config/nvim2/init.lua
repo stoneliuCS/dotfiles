@@ -30,5 +30,5 @@ vim.lsp.enable({
   "rust-analyzer",
   "tinymist",
   "templ",
-  "vtsls",
+  "vtsls"
 })
