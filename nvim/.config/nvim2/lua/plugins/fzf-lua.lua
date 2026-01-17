@@ -102,5 +102,21 @@ return {
 			desc = "fzf code actions",
 			nowait = true,
 		},
+		{
+			"<leader>u",
+			function()
+				require("fzf-lua").undotree()
+			end,
+			desc = "fzf undo log",
+			nowait = true,
+		},
+		{
+			"<leader>k",
+			function()
+				require("fzf-lua").keymaps()
+			end,
+			desc = "fzf keymaps",
+			nowait = true,
+		},
 	},
 }
