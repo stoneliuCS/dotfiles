@@ -50,3 +50,17 @@ export PATH="$HOME/.local/bin:$PATH"
 eval "$(mise activate zsh)"
 
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+# Add alias and function to print out my todo list.
+todo_read() {
+  local repo
+  repo="$(fd -t d -d 6 '^wiki$' "$HOME" | head -n1)"
+  [ -z "$repo" ] && { echo "wiki repo not found"; return 1; }
+  awk '
+    $0 == "= Hall of ToDo'\''s Version 2" {flag=1; next}
+    $0 == "= Hall of Finished ToDo'\''s Version 2" {exit}
+    flag
+  ' "$repo/content/todo.typ"
+}
+
+alias todo='todo_read'
