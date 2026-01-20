@@ -64,3 +64,7 @@ todo_read() {
 }
 
 alias todo='todo_read'
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
