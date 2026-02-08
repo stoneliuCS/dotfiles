@@ -21,6 +21,9 @@ brew cleanup
 npm update -g
 rustup update
 
+
+npm install -g tree-sitter-cli
+
 stow nvim 
 stow git 
 stow nix
