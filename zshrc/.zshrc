@@ -1,8 +1,7 @@
 # Alias VI and VIM to NVIM
-alias v2='NVIM_APPNAME="nvim2" nvim'
-alias vim='NVIM_APPNAME="nvim2" nvim'
-alias vi='NVIM_APPNAME="nvim2" nvim'
-alias oldnvim="nvim"
+alias v2=nvim
+alias vim=nvim
+alias vi=nvim
 alias oldvim="/usr/bin/vim"
 # Allow vim bindings to zsh shell
 bindkey -v
