@@ -4,6 +4,8 @@ require("config.lazy")
 -- Load the theme
 vim.cmd([[colorscheme rose-pine]])
 
+local coq = require "coq"
+
 -- Load the lsps
 vim.lsp.config("luals", require("config.lsp.luals"))
 vim.lsp.config("texlab", require("config.lsp.texlab"))
