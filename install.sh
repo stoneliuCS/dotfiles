@@ -21,7 +21,7 @@ brew cleanup
 npm update -g
 rustup update
 
-
+cargo install --locked difftastic
 npm install -g tree-sitter-cli
 
 stow nvim 
