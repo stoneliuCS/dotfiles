@@ -53,8 +53,8 @@ return {
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
-      ['<Tab>'] = { 'show_and_insert_or_accept_single', 'select_next' },
-      ['<S-Tab>'] = { 'show_and_insert_or_accept_single', 'select_prev' },
+      ['<Tab>'] = { 'select_next', 'fallback' },
+      ['<S-Tab>'] = { 'select_prev', 'fallback' },
 
       ['<C-space>'] = { 'show', 'fallback' },
       ["<CR>"] = { "select_and_accept", "fallback" },
@@ -74,7 +74,12 @@ return {
     },
 
     -- (Default) Only show the documentation popup when manually triggered
-    completion = { documentation = { auto_show = true } },
+    completion = {
+      documentation = { auto_show = true },
+      trigger = {
+        prefetch_on_insert = true
+      }
+    },
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
