@@ -21,15 +21,15 @@ vim.lsp.config("tailwindcss", require("config.lsp.tailwindcss"))
 
 -- Enable LSPs
 vim.lsp.enable({
-  "luals",
-  "texlab",
-  "pyright",
-  "dockerls",
-  "yamlls",
-  "gopls",
-  "rust-analyzer",
-  "tinymist",
-  "templ",
-  "ts_go_ls",
-  "tailwindcss",
+	"luals",
+	"texlab",
+	"pyright",
+	"dockerls",
+	"yamlls",
+	"gopls",
+	"rust-analyzer",
+	"tinymist",
+	"templ",
+	"ts_go_ls",
+	"tailwindcss",
 })
