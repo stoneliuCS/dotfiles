@@ -16,3 +16,4 @@
   dlog = -c diff.external=difft log --ext-diff
   dshow = -c diff.external=difft show --ext-diff
   ddiff = -c diff.external=difft diff
+	latest-commit = !/bin/bash -c \"gh browse $(git log -1 --format=%H)\"
