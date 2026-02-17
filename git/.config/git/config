@@ -17,3 +17,4 @@
   dshow = -c diff.external=difft show --ext-diff
   ddiff = -c diff.external=difft diff
 	latest-commit = !/bin/bash -c \"gh browse $(git log -1 --format=%H)\"
+	aliases = !git config --get-regexp ^alias\\. | sed -e 's/^alias\\.//' -e 's/ /\t= /' | sort
