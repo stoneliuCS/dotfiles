@@ -63,6 +63,22 @@ return {
 			nowait = true,
 		},
 		{
+			"<leader>fc",
+			function()
+				local fzf = require("fzf-lua")
+				fzf.fzf_exec("fd --type d", {
+					prompt = "Grep dir> ",
+					actions = {
+						["default"] = function(selected)
+							fzf.live_grep_native({ cwd = selected[1] })
+						end,
+					},
+				})
+			end,
+			desc = "Live grep (pick dir)",
+			nowait = true,
+		},
+		{
 			"<leader>g",
 			function()
 				require("fzf-lua").grep_curbuf()
