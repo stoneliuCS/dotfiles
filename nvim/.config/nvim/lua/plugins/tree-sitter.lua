@@ -5,7 +5,7 @@ return {
 	build = ":TSUpdate",
 	config = function()
 		local langs =
-			{ "typescript", "tsx", "python", "javascript", "html", "css", "markdown", "markdown_inline", "lua", "go" }
+			{ "typescript", "tsx", "python", "javascript", "html", "css", "markdown", "markdown_inline", "lua", "go", "yaml" }
 		require("nvim-treesitter").install(langs)
 		vim.api.nvim_create_autocmd("FileType", {
 			callback = function()
