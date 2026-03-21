@@ -52,12 +52,10 @@ export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
 # Add alias and function to print out my todo list.
 todo_read() {
-  local repo
-  repo="$(fd -t d -d 6 '^wiki$' "$HOME" | head -n1)"
-  [ -z "$repo" ] && { echo "wiki repo not found"; return 1; }
+  local repo="$HOME/Playground/stone-zone/wiki"
   awk '
-    $0 == "= Hall of ToDo'\''s Version 2" {flag=1; next}
-    $0 == "= Hall of Finished ToDo'\''s Version 2" {exit}
+    $0 == "= Todos:" {flag=1}
+    flag && /^_/ {print; exit}
     flag
   ' "$repo/content/todo.typ"
 }

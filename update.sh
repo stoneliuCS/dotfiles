@@ -5,4 +5,3 @@ brew upgrade
 brew cleanup
 npm update -g
 rustup update
-
