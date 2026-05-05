@@ -19,3 +19,4 @@
 	latest-commit = !/bin/bash -c \"gh browse $(git log -1 --format=%H)\"
 	web = !gh repo view --web
 	aliases = !git config --get-regexp ^alias\\. | sed -e 's/^alias\\.//' -e 's/ /\t= /' | sort
+	p = !/bin/bash -c \"git add . && git commit -m \\\"$1\\\" && git push\" -
