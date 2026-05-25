@@ -18,6 +18,7 @@ vim.lsp.config("tinymist", require("config.lsp.tinymist"))
 vim.lsp.config("templ", require("config.lsp.templ"))
 vim.lsp.config("ts_go_ls", require("config.lsp.ts_go_ls"))
 vim.lsp.config("tailwindcss", require("config.lsp.tailwindcss"))
+vim.lsp.config("clangd", require("config.lsp.clangd"))
 
 -- Enable LSPs
 vim.lsp.enable({
@@ -32,4 +33,5 @@ vim.lsp.enable({
 	"templ",
 	"vtsls",
 	"tailwindcss",
+	"clangd",
 })
