@@ -65,3 +65,7 @@ alias todo='todo_read'
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
+
+cpprun() {
+    g++ -x c++ -std=c++17 -O2 -Wall -Wextra -g "$1" -o /tmp/cpprun_out && /tmp/cpprun_out
+}
