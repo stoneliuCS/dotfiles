@@ -69,3 +69,7 @@ eval "$(pyenv init -)"
 cpprun() {
     g++ -x c++ -std=c++17 -O2 -Wall -Wextra -g "$1" -o /tmp/cpprun_out && /tmp/cpprun_out
 }
+
+javarun() {
+    java --source 17 "$1" "${@:2}"
+}
