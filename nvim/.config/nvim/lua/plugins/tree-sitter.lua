@@ -17,6 +17,7 @@ return {
 			"go",
 			"yaml",
 			"templ",
+			"java",
 		}
 		require("nvim-treesitter").install(langs)
 		vim.api.nvim_create_autocmd("FileType", {
