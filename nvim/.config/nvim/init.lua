@@ -2,7 +2,7 @@
 require("config.lazy")
 
 -- Load the theme
-vim.cmd([[colorscheme rose-pine]])
+vim.cmd([[colorscheme kanagawa]])
 
 -- Load the lsps
 vim.lsp.config("luals", require("config.lsp.luals"))
