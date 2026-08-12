@@ -3,6 +3,7 @@ return {
 	ft = { "java" },
 	config = function()
 		require("java").setup()
-		vim.lsp.enable("jdtls")
+		-- disabled while trying out nvim-intellij-lsp for Java
+		-- vim.lsp.enable("jdtls")
 	end,
 }
