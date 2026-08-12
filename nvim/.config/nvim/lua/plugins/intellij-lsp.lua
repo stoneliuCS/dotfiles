@@ -46,10 +46,11 @@ local function split_fenced_segments(text)
 			break
 		end
 		table.insert(segments, { kind = "code", lang = lang, text = text:sub(open_e + 1, close_s - 1) })
+		-- Leave the newline right after the closing fence for the next text
+		-- segment to pick up, instead of eating it here - callers that just
+		-- concat segments back together would otherwise jam the fence and
+		-- whatever follows onto the same line (e.g. "```is equivalent to:").
 		pos = close_e + 1
-		if text:sub(pos, pos) == "\n" then
-			pos = pos + 1
-		end
 	end
 	return segments
 end
@@ -136,6 +137,62 @@ local function indented_to_fenced(text)
 	return table.concat(out, "\n")
 end
 
+-- {@snippet [attrs] : code} (JEP 413, Java 18+) can contain arbitrary Java
+-- source, including its own `{}` and internal line breaks - a plain regex
+-- can't track nested braces, and pandoc (which doesn't recognize this
+-- javadoc-specific syntax at all) would flatten the code onto one line as
+-- ordinary paragraph text. So pull each snippet's code out *before* pandoc
+-- ever sees it, leaving a placeholder token, and splice the untouched code
+-- back in as a real fenced block afterward.
+local function extract_snippet_tags(html)
+	local snippets = {}
+	local out = {}
+	local pos = 1
+	while true do
+		local s, e = html:find("{@snippet", pos, true)
+		if not s then
+			table.insert(out, html:sub(pos))
+			break
+		end
+		table.insert(out, html:sub(pos, s - 1))
+		local depth, i, close = 0, s, nil
+		while i <= #html do
+			local c = html:sub(i, i)
+			if c == "{" then
+				depth = depth + 1
+			elseif c == "}" then
+				depth = depth - 1
+				if depth == 0 then
+					close = i
+					break
+				end
+			end
+			i = i + 1
+		end
+		if not close then
+			table.insert(out, html:sub(s))
+			break
+		end
+		local inner = html:sub(e + 1, close - 1)
+		local body = vim.trim((inner:match(":%s*(.*)$") or inner))
+		table.insert(snippets, body)
+		table.insert(out, ("XSNIPPETPLACEHOLDERX%dX"):format(#snippets))
+		pos = close + 1
+	end
+	return table.concat(out), snippets
+end
+
+local function restore_snippet_tags(md, snippets)
+	for idx, body in ipairs(snippets) do
+		local token = ("XSNIPPETPLACEHOLDERX%dX"):format(idx)
+		local s, e = md:find(token, 1, true)
+		if s then
+			md = md:sub(1, s - 1) .. "\n```java\n" .. body .. "\n```\n" .. md:sub(e + 1)
+		end
+	end
+	return md
+end
+
 -- Javadoc's own inline/block tag syntax ({@code}, {@link}, @author, ...) is
 -- not HTML, so pandoc passes it through as literal text. Convert it on
 -- pandoc's markdown output, where our added `` ` `` / `**` are unambiguous.
@@ -152,13 +209,43 @@ local function convert_javadoc_tags(text)
 	return text
 end
 
+-- pandoc's gfm writer passes through inline HTML it can't cleanly map to
+-- markdown verbatim (e.g. an empty `<span id="x"></span>` anchor has no
+-- markdown equivalent), so tags can still leak into the output. Strip them
+-- as a final safety net - but only outside fenced code, so real code
+-- (which never reaches pandoc anyway) can't be touched by this pass either.
+local function strip_stray_html(text)
+	text = text:gsub("<(%a+)[^>]*>(.-)</%1>", "%2")
+	text = text:gsub("<%a+[^>]*/?>", "")
+	return text
+end
+
+local function strip_leftover_html(md)
+	local segments = split_fenced_segments(md)
+	if #segments == 1 and segments[1].kind == "text" then
+		return strip_stray_html(md)
+	end
+	local out = {}
+	for _, seg in ipairs(segments) do
+		if seg.kind == "text" then
+			table.insert(out, strip_stray_html(seg.text))
+		else
+			table.insert(out, "```" .. (seg.lang or "") .. "\n" .. seg.text .. "\n```")
+		end
+	end
+	return table.concat(out)
+end
+
 local function html_to_markdown(html)
 	html = strip_javadoc_comment(html)
-	html = protect_block_tags(html)
+	local extracted, snippets = extract_snippet_tags(html)
+	html = protect_block_tags(extracted)
 	html = force_code_blocks(html)
 	local md = pandoc_html_to_gfm(html)
 	md = indented_to_fenced(md)
+	md = restore_snippet_tags(md, snippets)
 	md = convert_javadoc_tags(md)
+	md = strip_leftover_html(md)
 	return md
 end
 
