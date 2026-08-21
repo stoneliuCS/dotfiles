@@ -18,6 +18,7 @@ return {
 			"yaml",
 			"templ",
 			"java",
+			"apex",
 		}
 		require("nvim-treesitter").install(langs)
 		vim.api.nvim_create_autocmd("FileType", {

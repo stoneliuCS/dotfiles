@@ -19,6 +19,7 @@ vim.lsp.config("templ", require("config.lsp.templ"))
 vim.lsp.config("ts_go_ls", require("config.lsp.ts_go_ls"))
 vim.lsp.config("tailwindcss", require("config.lsp.tailwindcss"))
 vim.lsp.config("clangd", require("config.lsp.clangd"))
+vim.lsp.config("apex_ls", require("config.lsp.apex_ls"))
 
 -- Enable LSPs
 vim.lsp.enable({
@@ -34,4 +35,5 @@ vim.lsp.enable({
 	"vtsls",
 	"tailwindcss",
 	"clangd",
+	"apex_ls",
 })

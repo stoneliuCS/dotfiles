@@ -67,8 +67,10 @@ source "$HOME/.cargo/env"
 log "Installing rustup components"
 rustup component add rust-analyzer rustfmt clippy
 
-log "Installing cargo packages"
-cargo install --locked typstyle
+if ! have typstyle; then
+	log "Installing cargo packages"
+	cargo install --locked typstyle
+fi
 
 # ---------------------------------------------------------------------------
 # Node (nvm) + npm globals
@@ -87,18 +89,28 @@ nvm install --lts
 nvm alias default 'lts/*'
 corepack enable
 
-log "Installing npm globals"
-npm install -g @vtsls/language-server
+if ! have vtsls; then
+	log "Installing npm globals"
+	npm install -g @vtsls/language-server
+fi
+
+# salesforce-cli's Homebrew cask is deprecated (fails macOS Gatekeeper, being
+# disabled 2026-09-01) and its installer needs an interactive sudo password,
+# so install via npm instead - Salesforce's own recommended cross-platform path.
+if ! have sf; then
+	log "Installing Salesforce CLI"
+	npm install -g @salesforce/cli
+fi
 
 # ---------------------------------------------------------------------------
 # Go tools
 # ---------------------------------------------------------------------------
 
 log "Installing Go tools"
-go install golang.org/x/tools/gopls@latest
-go install golang.org/x/tools/cmd/goimports@latest
-go install github.com/a-h/templ/cmd/templ@latest
-go install github.com/go-delve/delve/cmd/dlv@latest
+have gopls || go install golang.org/x/tools/gopls@latest
+have goimports || go install golang.org/x/tools/cmd/goimports@latest
+have templ || go install github.com/a-h/templ/cmd/templ@latest
+have dlv || go install github.com/go-delve/delve/cmd/dlv@latest
 
 # ---------------------------------------------------------------------------
 # Bun
@@ -156,6 +168,25 @@ if [ ! -x "$HOME/typescript-go/built/local/tsgo" ]; then
 	log "Building typescript-go (tsgo)"
 	git clone --recursive --depth 1 https://github.com/microsoft/typescript-go.git "$HOME/typescript-go"
 	(cd "$HOME/typescript-go" && npm ci && npm run build)
+fi
+
+# ---------------------------------------------------------------------------
+# Apex Language Server (apex-jorje-lsp.jar) - not on Homebrew; the jar only
+# ships bundled inside the salesforcedx-vscode-apex VS Code extension's
+# .vsix (itself just a zip), so pull it straight from that extension's
+# GitHub release instead.
+# ---------------------------------------------------------------------------
+
+APEX_LS_VERSION="67.10.0"
+APEX_LS_DIR="$HOME/.local/share/apex-language-server"
+if [ ! -f "$APEX_LS_DIR/apex-jorje-lsp.jar" ]; then
+	log "Installing Apex Language Server $APEX_LS_VERSION"
+	mkdir -p "$APEX_LS_DIR"
+	tmp_vsix="$(mktemp)"
+	curl -fsSL -o "$tmp_vsix" \
+		"https://github.com/forcedotcom/salesforcedx-vscode/releases/download/v${APEX_LS_VERSION}/salesforcedx-vscode-apex-${APEX_LS_VERSION}.vsix"
+	unzip -p "$tmp_vsix" extension/dist/apex-jorje-lsp.jar >"$APEX_LS_DIR/apex-jorje-lsp.jar"
+	rm "$tmp_vsix"
 fi
 
 # ---------------------------------------------------------------------------

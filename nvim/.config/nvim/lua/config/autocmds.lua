@@ -1,4 +1,13 @@
 vim.o.autoread = true
+
+-- wide tables render as one long line; wrap breaks their column
+-- alignment across screen rows, so scroll horizontally instead
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = false
+  end,
+})
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
   command = "if mode() != 'c' | checktime | endif",
   pattern = "*",
