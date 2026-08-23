@@ -73,3 +73,85 @@ cpprun() {
 javarun() {
     java --source 17 "$1" "${@:2}"
 }
+
+
+# Docker cleanup helpers
+remove_all_docker_containers_and_volumes() {
+    docker rm -vf $(docker ps -aq)
+}
+
+remove_all_docker_images() {
+    echo "Removing all docker images."
+    docker rmi -f $(docker images -aq)
+}
+
+nuke() {
+    docker system prune -a --volumes -f
+}
+
+# Retry an rsync transfer until it succeeds
+rsync_retry() {
+    if [ "$#" -lt 2 ]; then
+        echo "Usage: rsync_retry <source> <destination> [delay_seconds]" >&2
+        return 2
+    fi
+
+    local source_path=$1
+    local destination_path=$2
+    local delay_seconds=${3:-10}
+    local attempt=1
+
+    while true; do
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] attempt ${attempt}: syncing ${source_path} -> ${destination_path}"
+
+        rsync -avP --partial --append-verify \
+            -e "ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=6" \
+            "$source_path" "$destination_path"
+        local exit_code=$?
+
+        if [ "$exit_code" -eq 0 ]; then
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] sync completed successfully"
+            return 0
+        fi
+
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] rsync exited with code ${exit_code}; retrying in ${delay_seconds}s"
+        attempt=$((attempt + 1))
+        sleep "$delay_seconds"
+    done
+}
+
+# Convert a PDF page to a JPEG. Usage: pdf2jpeg <input.pdf> [output.jpeg] [-p page_number]
+pdf2jpeg() {
+    local page=1
+    local input=""
+    local output=""
+
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            -p|--page)
+                page="$2"
+                shift 2
+                ;;
+            *)
+                if [ -z "$input" ]; then
+                    input="$1"
+                else
+                    output="$1"
+                fi
+                shift
+                ;;
+        esac
+    done
+
+    if [ -z "$input" ]; then
+        echo "Usage: pdf2jpeg <input.pdf> [output.jpeg] [-p page_number]" >&2
+        return 2
+    fi
+
+    if [ -z "$output" ]; then
+        output="${input%.pdf}.jpeg"
+    fi
+
+    local page_index=$((page - 1))
+    magick -density 300 "${input}[$page_index]" -quality 90 "$output"
+}

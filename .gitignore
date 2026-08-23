@@ -1,0 +1,8 @@
+scripts/.local/bin/songs/
+scripts/.local/bin/downloaded.txt
+scripts/.local/bin/__pycache__/
+
+# Claude Code writes runtime/synced state into ~/.claude/skills - never
+# version-control that, only Stone's own hand-authored skills/commands.
+claude/.claude/skills/synced/
+claude/.claude/skills/.trash/

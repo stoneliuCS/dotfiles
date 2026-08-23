@@ -15,7 +15,7 @@
 	pr = !/bin/bash -c \"gh pr view --web 2>/dev/null || gh pr create --web\"
   dlog = -c diff.external=difft log --ext-diff
   dshow = -c diff.external=difft show --ext-diff
-  ddiff = -c diff.external=difft diff
+  ddiff = "!f() { if command -v difft >/dev/null 2>&1; then git -c diff.external=difft diff \"$@\"; else git diff \"$@\"; fi; }; f"
 	latest-commit = !/bin/bash -c \"gh browse $(git log -1 --format=%H)\"
 	web = !gh repo view --web
 	aliases = !git config --get-regexp ^alias\\. | sed -e 's/^alias\\.//' -e 's/ /\t= /' | sort

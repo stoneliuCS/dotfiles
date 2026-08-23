@@ -195,7 +195,7 @@ fi
 
 log "Stowing dotfiles"
 cd "$(dirname "${BASH_SOURCE[0]}")"
-stow --restow nvim git nix tmux zshrc kitty inputrc
+stow --restow nvim git nix tmux zshrc kitty inputrc scripts claude
 
 # ---------------------------------------------------------------------------
 # Tmux Plugin Manager

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+  echo "Please pass the URL to the youtube application and the path to the download file."
+  exit
+fi
+
+YOUTUBE_URL=$1
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+OUTPUT_PATH="$SCRIPT_DIR/songs"
+ARCHIVE="$SCRIPT_DIR/downloaded.txt"
+FLAGS="-t aac --audio-quality 0 --embed-thumbnail --add-metadata --embed-metadata --download-archive $ARCHIVE -o"
+DEST_DIR="~/Music/Music/Media.localized/Automatically Add to Music.localized"
+
+if [ $? -eq 1 ]; then
+  echo "Please pass a real path."
+  exit
+fi
+
+echo "Upgrading yt-dlp"
+brew upgrade yt-dlp
+
+# Download the files
+yt-dlp $FLAGS "$OUTPUT_PATH/%(title)s.%(ext)s" $YOUTUBE_URL
+
+python3 "$SCRIPT_DIR/xyt.py"
