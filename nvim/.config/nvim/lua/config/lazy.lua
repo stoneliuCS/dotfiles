@@ -34,8 +34,14 @@ vim.opt.conceallevel = 0
 vim.opt.swapfile = false
 vim.opt.pumheight = 10
 vim.opt.relativenumber = true
+-- reserve the sign column permanently; the default "auto" collapses it
+-- when no diagnostic/gitsign is present, shifting the whole buffer
+-- sideways every time an error appears or clears
+vim.opt.signcolumn = "yes"
 -- Diagnostic Configuration
 vim.diagnostic.config({
+	-- half-typed code is always "wrong"; recomputing in insert mode makes
+	-- errors flicker in and out on every keystroke. defer to InsertLeave.
 	update_in_insert = true,
 	virtual_text = {
 		severity = { min = vim.diagnostic.severity.ERROR },
