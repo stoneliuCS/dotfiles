@@ -8,6 +8,18 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.wrap = false
   end,
 })
+-- python's indent script skips brackets inside comments/strings via a legacy
+-- syntax check (runtime/autoload/python.vim searchpairpos + synstack). treesitter
+-- highlighting sets syntax to "", so that check goes blind and an unbalanced "("
+-- in a comment reads as a real open bracket: every line below it indents to that
+-- bracket's column. Loading the regex syntax restores the check; the treesitter
+-- highlighter still wins on screen, it draws in a higher-priority namespace.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.bo.syntax = "python"
+  end,
+})
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
   command = "if mode() != 'c' | checktime | endif",
   pattern = "*",
