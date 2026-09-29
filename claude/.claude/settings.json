@@ -1,0 +1,10 @@
+{
+  "theme": "dark",
+  "editorMode": "vim",
+  "vimInsertModeRemaps": {
+    "jj": "<Esc>"
+  },
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true
+  }
+}

@@ -1,11 +1,16 @@
 vim.o.autoread = true
 
--- wide tables render as one long line; wrap breaks their column
--- alignment across screen rows, so scroll horizontally instead
+-- soft-wrap prose at word boundaries instead of mid-word; wrapped
+-- continuation lines keep the indent of their list item/quote
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    vim.opt_local.wrap = false
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.breakindent = true
+    -- ftplugin adds "l", which skips auto-wrap on lines already longer than
+    -- textwidth; notes predating textwidth=80 are mostly such lines
+    vim.opt_local.formatoptions:remove("l")
   end,
 })
 -- python's indent script skips brackets inside comments/strings via a legacy

@@ -10,7 +10,7 @@ source <(fzf --zsh)
 alias f='vim $(fzf --style default --preview "fzf-preview.sh {}" --bind "focus:transform-header:file --brief {}")'
 
 # bun completions
-[ -s "/Users/stoneliu/.bun/_bun" ] && source "/Users/stoneliu/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Add fcd for faster finding of directories
 fcd() {
@@ -33,12 +33,17 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.4.1 # run chruby to see actual version
+# Guarded: a fresh machine has chruby (brew) before it has any built ruby, and
+# an unguarded `chruby ruby-3.4.1` prints "unknown Ruby" on every shell start.
+if [ -r /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
+  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+  source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+  # run chruby to see actual version
+  [ -d "$HOME/.rubies/ruby-3.4.1" ] && chruby ruby-3.4.1
+fi
 
 # pnpm
-export PNPM_HOME="/Users/stone/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -48,7 +53,12 @@ export PATH="$HOME/.local/bin:$PATH"
 
 eval "$(mise activate zsh)"
 
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+# install.sh installs postgresql@14, but this line pinned @17, which was never
+# installed - so it only ever added a dead PATH entry. Take the newest present.
+for _pg in /opt/homebrew/opt/postgresql@17 /opt/homebrew/opt/postgresql@14; do
+  [ -d "$_pg/bin" ] && export PATH="$_pg/bin:$PATH" && break
+done
+unset _pg
 
 # Add alias and function to print out my todo list.
 todo_read() {

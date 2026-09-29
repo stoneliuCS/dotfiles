@@ -48,10 +48,33 @@ brew install \
 	supabase/tap/supabase browsh-org/browsh/browsh leohenon/tap/ocv \
 	anomalyco/tap/opencode
 
+# sioyek and vagrant-manager were dropped: both casks are Intel-only builds
+# that fail macOS Gatekeeper and were disabled upstream on 2026-09-01. `brew
+# install --cask` *errors* on a disabled cask, so under `set -e` they took the
+# whole script down here - before any of the toolchain stages below ran.
 log "Installing brew casks"
 brew install --cask \
-	kitty mactex skim sioyek shortcat font-jetbrains-mono-nerd-font \
-	ngrok vagrant vagrant-manager virtualbox temurin@11 temurin@8
+	kitty mactex skim shortcat font-jetbrains-mono-nerd-font \
+	ngrok vagrant virtualbox temurin@11 temurin@8
+
+# ---------------------------------------------------------------------------
+# Dotfiles (GNU Stow) + Tmux Plugin Manager
+#
+# Deliberately early: these only need `stow`, `git` and `tmux` from the brew
+# stage above, and they are what actually makes the machine feel like mine.
+# Run last, they sit behind ~10 network-dependent toolchain installs, so one
+# flaky download leaves the box with no dotfiles at all.
+# ---------------------------------------------------------------------------
+
+log "Stowing dotfiles"
+cd "$(dirname "${BASH_SOURCE[0]}")"
+stow --restow nvim git nix tmux zshrc kitty inputrc scripts claude
+
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+	log "Installing Tmux Plugin Manager"
+	git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
+"$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh"
 
 # ---------------------------------------------------------------------------
 # Rust (rustup, cargo)
@@ -61,13 +84,17 @@ if ! have rustup; then
 	log "Installing rustup"
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
+# Guarded: under `set -e` an unguarded source of a missing .cargo/env aborts
+# the whole script, taking every later stage down with a failed rustup.
 # shellcheck disable=SC1091
-source "$HOME/.cargo/env"
+[ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
-log "Installing rustup components"
-rustup component add rust-analyzer rustfmt clippy
+if have rustup; then
+	log "Installing rustup components"
+	rustup component add rust-analyzer rustfmt clippy
+fi
 
-if ! have typstyle; then
+if have cargo && ! have typstyle; then
 	log "Installing cargo packages"
 	cargo install --locked typstyle
 fi
@@ -84,10 +111,14 @@ export NVM_DIR="$HOME/.nvm"
 # shellcheck disable=SC1091
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-log "Installing latest LTS Node"
-nvm install --lts
-nvm alias default 'lts/*'
-corepack enable
+# `nvm` is a shell function from nvm.sh above, not a binary; `command -v`
+# (via have) resolves both. Skip rather than abort if the source never ran.
+if have nvm; then
+	log "Installing latest LTS Node"
+	nvm install --lts
+	nvm alias default 'lts/*'
+	corepack enable
+fi
 
 if ! have vtsls; then
 	log "Installing npm globals"
@@ -139,14 +170,19 @@ fi
 # under `pipefail`, grep -q exits the instant it finds a match, which for an
 # early hit closes the pipe while pyenv is still writing later lines, sending
 # it SIGPIPE - and that failure, not grep's success, is what pipefail reports.
-installed_pyenv_versions="$(pyenv versions --bare 2>/dev/null || true)"
-for pyver in 3.10.19 3.11.13; do
-	case $'\n'"$installed_pyenv_versions"$'\n' in
-	*$'\n'"$pyver"$'\n'*) continue ;;
-	esac
-	log "Installing Python $pyver via pyenv"
-	pyenv install "$pyver"
-done
+# Guarded on pyenv itself: the `|| true` below only stops the *query* from
+# failing, which would leave the list empty and send the loop into a
+# `pyenv install` that does not exist.
+if have pyenv; then
+	installed_pyenv_versions="$(pyenv versions --bare 2>/dev/null || true)"
+	for pyver in 3.10.19 3.11.13; do
+		case $'\n'"$installed_pyenv_versions"$'\n' in
+		*$'\n'"$pyver"$'\n'*) continue ;;
+		esac
+		log "Installing Python $pyver via pyenv"
+		pyenv install "$pyver"
+	done
+fi
 
 if have pipx; then
 	log "Installing pipx tools"
@@ -166,7 +202,11 @@ fi
 
 if [ ! -x "$HOME/typescript-go/built/local/tsgo" ]; then
 	log "Building typescript-go (tsgo)"
-	git clone --recursive --depth 1 https://github.com/microsoft/typescript-go.git "$HOME/typescript-go"
+	# Clone and build are guarded separately: a run that cloned then failed
+	# during the build leaves a non-empty directory, which `git clone` refuses,
+	# so an unconditional clone here would wedge every later run.
+	[ -d "$HOME/typescript-go/.git" ] ||
+		git clone --recursive --depth 1 https://github.com/microsoft/typescript-go.git "$HOME/typescript-go"
 	(cd "$HOME/typescript-go" && npm ci && npm run build)
 fi
 
@@ -185,27 +225,15 @@ if [ ! -f "$APEX_LS_DIR/apex-jorje-lsp.jar" ]; then
 	tmp_vsix="$(mktemp)"
 	curl -fsSL -o "$tmp_vsix" \
 		"https://github.com/forcedotcom/salesforcedx-vscode/releases/download/v${APEX_LS_VERSION}/salesforcedx-vscode-apex-${APEX_LS_VERSION}.vsix"
-	unzip -p "$tmp_vsix" extension/dist/apex-jorje-lsp.jar >"$APEX_LS_DIR/apex-jorje-lsp.jar"
+	# Extract to a sibling temp file and rename on success. Redirecting
+	# straight to the final path truncates it into existence before unzip
+	# runs, so a failed extract leaves a zero-byte jar that the `[ -f ]`
+	# check above would happily skip over on every later run.
+	tmp_jar="$(mktemp "$APEX_LS_DIR/.apex-jorje-lsp.jar.XXXXXX")"
+	unzip -p "$tmp_vsix" extension/dist/apex-jorje-lsp.jar >"$tmp_jar"
+	mv "$tmp_jar" "$APEX_LS_DIR/apex-jorje-lsp.jar"
 	rm "$tmp_vsix"
 fi
-
-# ---------------------------------------------------------------------------
-# Dotfiles (GNU Stow)
-# ---------------------------------------------------------------------------
-
-log "Stowing dotfiles"
-cd "$(dirname "${BASH_SOURCE[0]}")"
-stow --restow nvim git nix tmux zshrc kitty inputrc scripts claude
-
-# ---------------------------------------------------------------------------
-# Tmux Plugin Manager
-# ---------------------------------------------------------------------------
-
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-	log "Installing Tmux Plugin Manager"
-	git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
-fi
-"$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh"
 
 # ---------------------------------------------------------------------------
 # Keep everything up to date
@@ -216,10 +244,14 @@ brew update
 brew upgrade
 brew cleanup
 
-log "Updating npm globals"
-npm update -g
+if have npm; then
+	log "Updating npm globals"
+	npm update -g
+fi
 
-log "Updating rustup"
-rustup update
+if have rustup; then
+	log "Updating rustup"
+	rustup update
+fi
 
 log "Done"
