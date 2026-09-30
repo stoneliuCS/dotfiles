@@ -6,3 +6,8 @@ scripts/.local/bin/__pycache__/
 # version-control that, only Stone's own hand-authored skills/commands.
 claude/.claude/skills/synced/
 claude/.claude/skills/.trash/
+
+# Work skills stay private and this repo is public.
+# Real files live in work-skills/; skills/ holds a symlink per work skill.
+claude/.claude/work-skills/
+claude/.claude/skills/trailhead-study
