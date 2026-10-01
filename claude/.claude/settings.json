@@ -1,10 +1,21 @@
 {
+  "model": "sonnet",
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true,
+    "agentforce-adlc@agentforce-adlc": true
+  },
+  "extraKnownMarketplaces": {
+    "agentforce-adlc": {
+      "source": {
+        "source": "github",
+        "repo": "SalesforceAIResearch/agentforce-adlc"
+      }
+    }
+  },
+  "tui": "default",
   "theme": "dark",
   "editorMode": "vim",
   "vimInsertModeRemaps": {
     "jj": "<Esc>"
-  },
-  "enabledPlugins": {
-    "lua-lsp@claude-plugins-official": true
   }
 }

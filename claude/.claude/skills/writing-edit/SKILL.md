@@ -21,6 +21,9 @@ Edit the user's writing, explain the key changes briefly, then copy the final te
 
 Keep the whole response short.
 
+## Multi-turn edits
+Treat each message as its own standalone piece of text. Don't merge it with text edited earlier in the conversation unless the user explicitly asks to combine them.
+
 ## Clipboard
 Copy the final text only (no quote markers or commentary) with a quoted heredoc so `$`, quotes, and backticks survive, then verify:
 
