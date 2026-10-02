@@ -255,6 +255,34 @@ if [ ! -f "$APEX_LS_DIR/apex-jorje-lsp.jar" ]; then
 fi
 
 # ---------------------------------------------------------------------------
+# XML Language Server (lemminx) - not on Homebrew; Red Hat publishes native
+# (GraalVM, no JVM needed) builds as assets on the vscode-xml GitHub release.
+# ---------------------------------------------------------------------------
+
+LEMMINX_VERSION="0.29.3"
+LEMMINX_DIR="$HOME/.local/share/lemminx"
+if [ ! -x "$LEMMINX_DIR/lemminx" ]; then
+	log "Installing lemminx $LEMMINX_VERSION"
+	mkdir -p "$LEMMINX_DIR"
+	case "$(uname -m)" in
+	arm64) lemminx_arch="aarch_64" ;;
+	*) lemminx_arch="x86_64" ;;
+	esac
+	lemminx_url="https://github.com/redhat-developer/vscode-xml/releases/download/${LEMMINX_VERSION}/lemminx-osx-${lemminx_arch}"
+	tmp_zip="$(mktemp)"
+	curl -fsSL -o "$tmp_zip" "$lemminx_url.zip"
+	# Verify against the published checksum before trusting the binary.
+	[ "$(shasum -a 256 "$tmp_zip" | cut -d' ' -f1)" = "$(curl -fsSL "$lemminx_url.sha256" | cut -d' ' -f1)" ]
+	# The zip holds a single binary named after the asset; extract to a temp
+	# file and rename on success for the same reason as the Apex jar above.
+	tmp_bin="$(mktemp "$LEMMINX_DIR/.lemminx.XXXXXX")"
+	unzip -p "$tmp_zip" >"$tmp_bin"
+	chmod +x "$tmp_bin"
+	mv "$tmp_bin" "$LEMMINX_DIR/lemminx"
+	rm "$tmp_zip"
+fi
+
+# ---------------------------------------------------------------------------
 # Keep everything up to date
 # ---------------------------------------------------------------------------
 

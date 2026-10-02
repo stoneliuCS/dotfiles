@@ -16,6 +16,7 @@ return {
 			"lua",
 			"go",
 			"yaml",
+			"xml",
 			"templ",
 			"java",
 			"apex",
