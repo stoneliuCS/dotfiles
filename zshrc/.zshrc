@@ -60,6 +60,15 @@ for _pg in /opt/homebrew/opt/postgresql@17 /opt/homebrew/opt/postgresql@14; do
 done
 unset _pg
 
+# /usr/local/bin/java (a managed-machine placeholder stub) sits
+# ahead of the real Temurin JDK on PATH and no-ops instead of running, which
+# silently breaks anything that just shells out to `java` (e.g. the Apex
+# language server in nvim). Point JAVA_HOME at the real JDK so callers that
+# honor it bypass the placeholder.
+if [ -x /usr/libexec/java_home ]; then
+  export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)"
+fi
+
 # Add alias and function to print out my todo list.
 todo_read() {
   local repo="$HOME/stone-zone/wiki"

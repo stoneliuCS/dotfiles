@@ -1,5 +1,5 @@
 {
-  "model": "sonnet",
+  "model": "opus",
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
     "agentforce-adlc@agentforce-adlc": true

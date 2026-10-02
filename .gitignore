@@ -11,3 +11,10 @@ claude/.claude/skills/.trash/
 # Real files live in work-skills/; skills/ holds a symlink per work skill.
 claude/.claude/work-skills/
 claude/.claude/skills/trailhead-study
+
+# Salesforce tooling build/cache output. The Apex language server writes its
+# .sfdx/ (StandardApexLibrary stubs, indexes) into whatever it resolves as the
+# workspace - outside an sfdx project that's a literal "null/" dir.
+.sfdx/
+.sf/
+nvim/.config/nvim/null/

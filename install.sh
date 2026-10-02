@@ -125,6 +125,20 @@ if ! have vtsls; then
 	npm install -g @vtsls/language-server
 fi
 
+# Agent Script (Agentforce's .agent authoring language) LSP - Salesforce
+# publishes it standalone on npm, unlike apex-jorje-lsp.jar.
+if ! have agentscript-lsp; then
+	log "Installing AgentScript Language Server"
+	npm install -g @sf-agentscript/lsp-server
+fi
+
+# SOQL LSP - on npm but ships no bin (it's a library the salesforcedx-vscode-soql
+# extension launches with node), so `have` can't detect it; check the module dir.
+if [ ! -d "$(npm root -g)/@salesforce/soql-language-server" ]; then
+	log "Installing SOQL Language Server"
+	npm install -g @salesforce/soql-language-server
+fi
+
 # salesforce-cli's Homebrew cask is deprecated (fails macOS Gatekeeper, being
 # disabled 2026-09-01) and its installer needs an interactive sudo password,
 # so install via npm instead - Salesforce's own recommended cross-platform path.
@@ -217,7 +231,12 @@ fi
 # GitHub release instead.
 # ---------------------------------------------------------------------------
 
-APEX_LS_VERSION="67.10.0"
+# Pinned to 62.2.0: every 67.x release tested (67.10.0, 67.20.0, the current
+# latest) crashes on startup with "RuntimeException: telemetry handler is
+# null" from apex.jorje.lsp.impl.telemetry.TelemetryFactory when run outside
+# the VS Code extension host, which apparently supplies something these
+# standalone launches don't. 62.2.0 is the last version confirmed to start.
+APEX_LS_VERSION="62.2.0"
 APEX_LS_DIR="$HOME/.local/share/apex-language-server"
 if [ ! -f "$APEX_LS_DIR/apex-jorje-lsp.jar" ]; then
 	log "Installing Apex Language Server $APEX_LS_VERSION"

@@ -1,6 +1,6 @@
 ---
 name: writing-edit
-description: Give feedback on a piece of the user's writing, edit it (grammar, clarity, concision), and copy the final version to the macOS clipboard with pbcopy. Trigger when the user asks to fix grammar, edit, polish, proofread, review, or get feedback on writing they paste or point to (briefs, answers, messages, docs), or says "put it in my clipboard" for edited text.
+description: Give feedback on a piece of the user's writing, edit it (grammar, clarity, concision), and copy the final version to the macOS clipboard with pbcopy. Trigger when the user asks to fix grammar, edit, polish, proofread, review, or get feedback on writing they paste or point to (briefs, answers, messages, docs), or says "put it in my clipboard" for edited text. Also trigger whenever the user asks for a single piece of text that aggregates, summarizes, iterates on, or finalizes prior discussion into one final product (e.g. "summarize this into one writeup," "okay lock that in") — copy that final product to the clipboard the same way, for efficiency, without being asked each time.
 ---
 
 # Writing Edit
@@ -23,6 +23,9 @@ Keep the whole response short.
 
 ## Multi-turn edits
 Treat each message as its own standalone piece of text. Don't merge it with text edited earlier in the conversation unless the user explicitly asks to combine them.
+
+## Aggregation / synthesis requests
+When the user asks for one final piece of text built from prior discussion (not a pasted draft to edit) — e.g. "summarize this into one writeup," "okay let's go with that," "lock that in" — synthesize it into a single finished piece in their voice and copy it to the clipboard automatically, without being asked each time. Skip the bullet-point feedback step (there's no original draft to critique); just give the result and confirm it's copied. If the user narrows scope (e.g. "just concerns for now," "just the X part"), copy only that scoped piece until they say otherwise.
 
 ## Clipboard
 Copy the final text only (no quote markers or commentary) with a quoted heredoc so `$`, quotes, and backticks survive, then verify:

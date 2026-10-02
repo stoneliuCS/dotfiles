@@ -4,6 +4,9 @@ require("config.lazy")
 -- Load the theme
 vim.cmd([[colorscheme kanagawa]])
 
+-- Load filetype detection for extensions Neovim doesn't recognize out of the box
+require("config.filetype")
+
 -- Load the lsps
 vim.lsp.config("luals", require("config.lsp.luals"))
 vim.lsp.config("texlab", require("config.lsp.texlab"))
@@ -20,6 +23,8 @@ vim.lsp.config("ts_go_ls", require("config.lsp.ts_go_ls"))
 vim.lsp.config("tailwindcss", require("config.lsp.tailwindcss"))
 vim.lsp.config("clangd", require("config.lsp.clangd"))
 vim.lsp.config("apex_ls", require("config.lsp.apex_ls"))
+vim.lsp.config("agentscript_ls", require("config.lsp.agentscript_ls"))
+vim.lsp.config("soql_ls", require("config.lsp.soql_ls"))
 
 -- Enable LSPs
 vim.lsp.enable({
@@ -36,4 +41,6 @@ vim.lsp.enable({
 	"tailwindcss",
 	"clangd",
 	"apex_ls",
+	"agentscript_ls",
+	"soql_ls",
 })
