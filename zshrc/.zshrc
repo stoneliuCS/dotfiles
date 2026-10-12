@@ -174,3 +174,6 @@ pdf2jpeg() {
     local page_index=$((page - 1))
     magick -density 300 "${input}[$page_index]" -quality 90 "$output"
 }
+
+# Machine/work-specific config (untracked; dotfiles repo is public)
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
