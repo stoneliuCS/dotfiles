@@ -7,10 +7,12 @@ scripts/.local/bin/__pycache__/
 claude/.claude/skills/synced/
 claude/.claude/skills/.trash/
 
-# Work skills stay private and this repo is public.
-# Real files live in work-skills/; skills/ holds a symlink per work skill.
-claude/.claude/work-skills/
+# Salesforce skills stay private and this repo is public.
+# Real files live in salesforce-skills/; skills/ holds a symlink per skill.
+# Anything Salesforce-specific goes in salesforce-skills/, never skills/.
+claude/.claude/salesforce-skills/
 claude/.claude/skills/trailhead-study
+claude/.claude/skills/pi-ask
 
 # Salesforce tooling build/cache output. The Apex language server writes its
 # .sfdx/ (StandardApexLibrary stubs, indexes) into whatever it resolves as the
